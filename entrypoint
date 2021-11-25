@@ -1,4 +1,11 @@
 #!/bin/sh
 umask 0000
+if [ ! -z "$SITE_KEY" ] && [ ! -z "$SECRET_KEY" ]; then
+    echo "Initializing reCaptcha config"
+    set -x
+    /filebrowser config set --auth.method=json --recaptcha.key $SITE_KEY --recaptcha.secret $SECRET_KEY
+    set +x
+else
+    echo "Please configure SITE_KEY and SECRET_KEY environment variables in order to configure recaptcha"
+fi
 /filebrowser
-
